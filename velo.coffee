@@ -18,7 +18,7 @@
 
 postRequest = (msg, path, params, callback) ->
   stringParams = JSON.stringify params
-  msg.http("#{URL}#{path}")
+  msg.http(path)
     .headers("Content-type": "application/x-www-form-urlencoded")
     .post(stringParams) (err, res, body) ->
       callback(err, res, body)
