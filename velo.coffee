@@ -44,7 +44,7 @@ module.exports = (robot) ->
         msg.send "Neen. Het zal wandelen worden."
       return
     data = "idStation=#{station}"
-    postRequest(msg, 'https://www.velo-antwerpen.be/CallWebService/StationBussinesStatus.php', {idStation: station}, (err, res, body) ->
+    postRequest msg, 'https://www.velo-antwerpen.be/CallWebService/StationBussinesStatus.php', {idStation: station}, (err, res, body) ->
       matches = /bikes\s+(\d+)\s+slots\s+(\d+)/gi.exec body
       if matches.length is 3
         nrOfBikes = Number(matches[1])
@@ -61,4 +61,4 @@ module.exports = (robot) ->
         else
           checkStatus msg, stations, false
       else
-          msg.send "Ik weet het niet."
+        msg.send "Ik weet het niet."
