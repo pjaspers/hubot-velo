@@ -17,10 +17,9 @@
 #   @pjaspers based on work by @inferis based on work by @ridingwolf based on work by @bobvanlooveren
 
 postRequest = (msg, path, params, callback) ->
-  stringParams = JSON.stringify params
   msg.http(path)
     .headers("Content-type": "application/x-www-form-urlencoded")
-    .post(stringParams) (err, res, body) ->
+    .post(params) (err, res, body) ->
       callback(err, res, body)
 
 module.exports = (robot) ->
@@ -44,7 +43,7 @@ module.exports = (robot) ->
         msg.send "Neen. Het zal wandelen worden."
       return
     data = "idStation=#{station}"
-    postRequest msg, 'https://www.velo-antwerpen.be/CallWebService/StationBussinesStatus.php', {idStation: station}, (err, res, body) ->
+    postRequest msg, 'https://www.velo-antwerpen.be/CallWebService/StationBussinesStatus.php', "idStation=#{station}", (err, res, body) ->
       matches = /bikes\s+(\d+)\s+slots\s+(\d+)/gi.exec body
       if matches.length is 3
         nrOfBikes = Number(matches[1])
